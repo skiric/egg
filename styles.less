@@ -1,0 +1,74 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+		overflow: hidden;
+}
+
+.center() {
+	position: fixed;
+	left: 50%;
+	right: 50%;
+	transform: translate(-50%, -50%); 
+}
+
+sky, ground {
+	display: block;
+}
+
+@sky-height: 50vh;
+sky {
+	background: #1D70B2;
+	height: @sky-height;
+	z-index: -10;
+}
+
+@ground-color: #92CC13;
+ground {
+	background: @ground-color;
+	height: 100vh - @sky-height;
+	z-index: -5;
+}
+
+@egg-color: #FFF6ED;
+@egg-border: lighten(black, 50%);
+@egg-height: 300px;
+@egg-width: @egg-height * 2/3;
+
+egg {
+   display: block;
+   width: @egg-width;
+   height: @egg-height;
+   background-color: @egg-color;
+   border-radius: 50% ~"/" 60% 60% 40% 40%;
+   border: medium solid @egg-border;
+   z-index: 10;
+   .center;
+   overflow: hidden;
+}
+
+egg crack {
+	display: inline-block;
+	border-left: 2px solid @egg-border;
+	@crack-size: @egg-width / 6;
+	height: sqrt(2  * @crack-size * @crack-size);
+	width: 0;
+	margin-top: @egg-height * .6;
+	transform-origin: 0 0;
+	margin-right: @crack-size - 2;
+
+	&:nth-child(even) {
+		transform: translate(@crack-size) rotate(45deg);
+	}
+	&:nth-child(odd) {
+		transform: rotate(-45deg);
+	}
+}
+
+.nugget {
+	display: block;
+	z-index: 0;
+	.center;
+}
