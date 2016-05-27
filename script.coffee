@@ -12,27 +12,28 @@ $('egg').click (e) ->
 
 i = 0
 changeTime = (e) ->
+	times = ['day', 'twilight', 'night', 'twilight']
+	positions = ['0%', '50%', '100%', '50%']
+	easing = ['easeInSine', 'easeOutSine']
+
+	$('sky, ground, egg').switchClass(times[i % 4], times[(i + 1) % 4])
 	i++
-	$('sun').animate({
-			top: if i % 4 == 0 then "0%" else if i % 2 then "50%" else "100%"
-			left: if i % 4 == 3 then "0%" else if i % 2 then "100%" else "50%"
-		}, {
-			specialEasing: {
-				top: if i % 2 then "easeInSine" else "easeOutSine" 
-				left: if i % 2 then "easeOutSine" else "easeInSine"
-			}
-		})
-	$('moon').animate({
-		top: if i % 4 == 0 then "100%" else if i % 2 then "50%" else "0%"
-		left: if i % 4 == 3 then "100%" else if i % 2 then "0%" else "50%"
-		}, {
-			specialEasing: {
-				top: if i % 2 then "easeInSine" else "easeOutSine" 
-				left: if i % 2 then "easeOutSine" else "easeInSine"
-			}
-		})
-	$('sky').animate {
-		backgroundColor: if i % 2 then "#FF4500" else if i % 4 == 0 then "#1D70B2" else "black"
+	
+	options = {
+		specialEasing: {
+			top: easing[(i + 1) % 2]
+			left: easing[i % 2]
+		}
 	}
+	
+	$('sun').animate({
+			top: positions[i % 4]
+			left: positions[(i + 1) % 4]
+		}, options)
+	$('moon').animate({
+			top: positions[(i + 2) % 4]
+			left: positions[(i + 3) % 4]
+		}, options)
+
 
 $('sun, moon').click changeTime
