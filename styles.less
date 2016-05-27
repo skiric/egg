@@ -10,7 +10,7 @@ body {
 .center() {
 	position: fixed;
 	left: 50%;
-	right: 50%;
+	top: 50%;
 	transform: translate(-50%, -50%); 
 }
 
@@ -20,16 +20,21 @@ sky, ground {
 
 @sky-height: 50vh;
 sky {
+	top: 0%;
+	width: 100%;
+	position: fixed;
 	background: #1D70B2;
 	height: @sky-height;
-	z-index: -10;
+	overflow: hidden;
 }
 
 @ground-color: #92CC13;
 ground {
+	position: fixed;
+	top: 50%;
+	width: 100%;
 	background: @ground-color;
 	height: 100vh - @sky-height;
-	z-index: -5;
 }
 
 @egg-color: #FFF6ED;
@@ -38,14 +43,13 @@ ground {
 @egg-width: @egg-height * 2/3;
 
 egg {
+   .center;
    display: block;
    width: @egg-width;
    height: @egg-height;
    background-color: @egg-color;
    border-radius: 50% ~"/" 60% 60% 40% 40%;
    border: medium solid @egg-border;
-   z-index: 10;
-   .center;
    overflow: hidden;
 }
 
@@ -68,7 +72,26 @@ egg crack {
 }
 
 .nugget {
-	display: block;
-	z-index: 0;
 	.center;
+	display: block;
+}
+
+.sky-object() {
+	.center;
+	display: block;
+	border-radius: 50%;
+	width: 15vh;
+	height: 15vh;
+}
+
+sun {
+	.sky-object;
+	background-color: orange;
+	top: 0%;
+}
+
+moon {
+	.sky-object;
+	background-color: grey;
+	top: 100%;
 }

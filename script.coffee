@@ -9,3 +9,30 @@ $('egg').click (e) ->
 		egg.fadeOut()
 		$('<img class="nugget" src="golden-nugget.png"/>').appendTo('ground')
 		ga('send', 'event', 'Egg', 'nugget')
+
+i = 0
+changeTime = (e) ->
+	i++
+	$('sun').animate({
+			top: if i % 4 == 0 then "0%" else if i % 2 then "50%" else "100%"
+			left: if i % 4 == 3 then "0%" else if i % 2 then "100%" else "50%"
+		}, {
+			specialEasing: {
+				top: if i % 2 then "easeInSine" else "easeOutSine" 
+				left: if i % 2 then "easeOutSine" else "easeInSine"
+			}
+		})
+	$('moon').animate({
+		top: if i % 4 == 0 then "100%" else if i % 2 then "50%" else "0%"
+		left: if i % 4 == 3 then "100%" else if i % 2 then "0%" else "50%"
+		}, {
+			specialEasing: {
+				top: if i % 2 then "easeInSine" else "easeOutSine" 
+				left: if i % 2 then "easeOutSine" else "easeInSine"
+			}
+		})
+	$('sky').animate {
+		backgroundColor: if i % 2 then "#FF4500" else if i % 4 == 0 then "#1D70B2" else "black"
+	}
+
+$('sun, moon').click changeTime
