@@ -44,6 +44,16 @@ sky {
 	}
 }
 
+.season(@color) {
+	background: @color;
+
+	&.night {
+		background: darken(@color, 25%);
+	}
+	&.twilight {
+		background: darken(@color, 10%);
+	}
+}
 @ground-color: #92CC13;
 ground {
 	position: fixed;
@@ -52,11 +62,18 @@ ground {
 	height: 100vh - @sky-height;
 	background: @ground-color;
 
-	&.night {
-		background: darken(@ground-color, 25%);
+	.season(@ground-color);
+
+	&.summer {
+		.season(yellow);
 	}
-	&.twilight {
-		background: darken(@ground-color, 10%);
+
+	&.autumn {
+		.season(orange);
+	}
+
+	&.winter {
+		.season(white);
 	}
 }
 

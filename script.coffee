@@ -1,5 +1,4 @@
 DURATION = 240
-WAIT = DURATION + 10
 
 eggCrackSound = new Audio("crack.wav")
 crackEgg = (e) ->
@@ -19,33 +18,43 @@ crackEgg = (e) ->
 		$('<img class="nugget" src="golden-nugget.png"/>').appendTo('ground')
 		ga('send', 'event', 'Egg', 'nugget')
 
-$('egg').click _.throttle crackEgg, WAIT, {trailing: false}
+$('egg').click _.throttle crackEgg, DURATION, {trailing: false}
 
-i = 0
+TIMES = ['day', 'twilight', 'night', 'twilight']
+POSITIONS = ['0%', '50%', '100%', '50%']
+EASINGS = ['easeInSine', 'easeOutSine']
+time = 0
 changeTime = (e) ->
-	times = ['day', 'twilight', 'night', 'twilight']
-	positions = ['0%', '50%', '100%', '50%']
-	easing = ['easeInSine', 'easeOutSine']
 
-	$('sky, ground, egg, .egg').switchClass times[i % 4], times[(i + 1) % 4], DURATION
-	i++
+	$('sky, ground, egg, .egg').switchClass TIMES[time % 4], TIMES[(time + 1) % 4], DURATION
+	time++
 	
 	options = {
 		specialEasing: {
-			top: easing[(i + 1) % 2]
-			left: easing[i % 2]
+			top: EASINGS[(time + 1) % 2]
+			left: EASINGS[time % 2]
 		}
 		duration: DURATION
 	}
 	
 	$('sun').animate({
-			top: positions[i % 4]
-			left: positions[(i + 1) % 4]
+			top: POSITIONS[time % 4]
+			left: POSITIONS[(time + 1) % 4]
 		}, options)
 	$('moon').animate({
-			top: positions[(i + 2) % 4]
-			left: positions[(i + 3) % 4]
+			top: POSITIONS[(time + 2) % 4]
+			left: POSITIONS[(time + 3) % 4]
 		}, options)
 
 
-$('sky').click _.throttle changeTime, WAIT
+$('sky').click _.throttle changeTime, DURATION, {trailing: false}
+
+SEASONS = ['spring', 'summer', 'autumn', 'winter']
+season = 0
+changeSeason = (e) ->
+	ground = $ this
+	if (e.target == this)
+		ground.switchClass SEASONS[season % 4], SEASONS[(season + 1) % 4], DURATION
+		season++
+
+$('ground').click _.throttle changeSeason, DURATION, {trailing: false}
