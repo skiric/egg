@@ -14,12 +14,20 @@ body {
 	transform: translate(-50%, -50%); 
 }
 
+.filter(@value) {
+  -webkit-filter: @value;
+  -ms-filter: @value;
+  filter: @value;
+}
+
 sky, ground {
 	display: block;
 }
 
 @sky-height: 50vh;
 @sky-color: #1D70B2;
+@night-color: black;
+@twilight-color: orangered;
 sky {
 	top: 0%;
 	width: 100%;
@@ -29,10 +37,10 @@ sky {
 	background: @sky-color;
 
 	&.night {
-		background: black;
+		background: @night-color;
 	}
 	&.twilight {
-		background: orangered;
+		background: @twilight-color;
 	}
 }
 
@@ -52,7 +60,7 @@ ground {
 	}
 }
 
-@egg-color: #FFF6ED;
+@egg-color: #FFFFEE;
 @egg-border: lighten(black, 50%);
 @egg-height: 300px;
 @egg-width: @egg-height * 2/3;
@@ -68,10 +76,10 @@ egg {
    overflow: hidden;
 
    	&.night {
-		background: mix(@egg-color, grey, 25%);
+		background: mix(@egg-color, @night-color, 75%);
 	}
 	&.twilight {
-		background: darken(@egg-color, 10%);
+		background: mix(@egg-color, @twilight-color, 75%);
 	}
 }
 
@@ -96,6 +104,14 @@ egg crack {
 .nugget {
 	.center;
 	display: block;
+
+	&.night {
+		.filter(brightness(50%));
+	}
+
+	&.twilight {
+		.filter(brightness(15%));
+	}
 }
 
 .sky-object() {
