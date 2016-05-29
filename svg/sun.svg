@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<svg id="sun" viewBox="-10 -10 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="orange" fill="orange">
+	<style>
+		circle {
+		  stroke-dasharray: 2;
+		  stroke-width: 2;
+		}
+	</style>
+	<circle cx="0" cy="0" r="9" />
+</svg>
