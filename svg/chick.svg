@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<defs>
 		<g id="leg">
 			<line x1="40" y1="80" x2="32.5" y2="95" stroke="black" />
@@ -12,18 +12,16 @@
 
 	<ellipse id="body" cx="50" cy="50" rx="30" ry="35" fill="yellow" stroke="orange" />
 
-	<use href="#wing" y="50" x="5" />
-	<use href="#wing" y="50" x="5" transform="translate(100,0) scale(-1,1)" />
+	<use xlink:href="#wing" y="50" x="5" />
+	<use xlink:href="#wing" y="50" x="5" transform="translate(100,0) scale(-1,1)" />
 
 	<!--polygon points="50,10 35,15 40,5" fill="red"/-->
 	<g transform="translate(-3,3)">
-		<use href="#eye" x="50" y="30" />
-		<use href="#eye" x="66" y="26" />
+		<use xlink:href="#eye" x="50" y="30" />
+		<use xlink:href="#eye" x="66" y="26" />
 		<polyline id="beak" points="20,20 30,26 24,18 32,14 22,14" transform="translate(35,25) rotate(-10)" fill="none" stroke="orange" />
 	</g>
 	<!--polyline points="30,30 45,40 36,27 48,20 33,21" /-->
-	<use href="#leg" />
-	<use href="#leg" transform="translate(100,0) scale(-1,1)" />
-
-
+	<use xlink:href="#leg" />
+	<use xlink:href="#leg" transform="translate(100,0) scale(-1,1)" />
 </svg>
