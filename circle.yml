@@ -1,0 +1,5 @@
+deployment:
+  default:
+    branch: master
+    commands:
+      - scp -r index.html script.coffee styles.less svg audio $USERNAME@$HOST:$DIRECTORY
