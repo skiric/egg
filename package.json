@@ -1,0 +1,19 @@
+{
+  "name": "jrabaino-website",
+  "version": "1.0.0",
+  "description": "My website",
+  "main": "index.html",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skiric/website.git"
+  },
+  "author": "Jeremy Rabaino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skiric/website/issues"
+  },
+  "homepage": "https://github.com/skiric/website#readme"
+}
