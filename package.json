@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/skiric/website/issues"
   },
-  "homepage": "https://github.com/skiric/website#readme"
+  "homepage": "https://github.com/skiric/website#readme",
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  }
 }
