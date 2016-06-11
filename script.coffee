@@ -21,10 +21,11 @@ crackEgg = (e) ->
 			.addClass TIMES[time % 4]
 			.addClass SEASONS[season % 4]
 		new Audio("audio/#{reward}.wav").play()
-		ga('send', 'event', 'Reward', '#{reward}')
+		ga('send', 'event', 'Reward', "#{reward}")
 
 $('egg').click _.throttle crackEgg, DURATION, {trailing: false}
 
+PHASES = ['full', 'waningGibbous', 'thirdQuarter', 'waningCrescent', 'new', 'waxingCrescent', 'firstQuarter', 'waxingGibbous']
 TIMES = ['day', 'twilight', 'night', 'twilight']
 POSITIONS = ['0%', '50%', '100%', '50%']
 EASINGS = ['easeInSine', 'easeOutSine']
@@ -53,12 +54,11 @@ changeTime = (e) ->
 			left: POSITIONS[(time + 3) % 4]
 		}, options)
 
-# phases go from 6 decreasing to 0, then increasing to 6
 checkPhase = () ->
 	if(time % 4 == 0)
 		phase++
-		nextPhase = Math.abs((phase%13) - 6)
-		$('#moon').attr 'href', "svg/moon.svg#phase#{nextPhase}"
+		phaseName = PHASES[phase % 8]
+		$('#moon').attr 'href', "svg/moon.svg##{phaseName}Moon"
 
 $('sky').click _.throttle changeTime, DURATION, {trailing: false}
 

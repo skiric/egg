@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
-<svg id="moon" viewBox="-10 -10 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
-	<path id="phase1" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,10.5 0 0,0 0,10 z" />
-	<path id="phase2" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,12.5 0 0,0 0,10 z" />
-	<path id="phase3" d="M 0 10 A 10,10 0 0,1 0,-10 z" />
-	<path id="phase4" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,12.5 0 0,1 0,10 z" />
-	<path id="phase5" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,10.5 0 0,1 0,10 z" />
-	<path id="phase6" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,10 0 0,1 0,10 z" />
+<svg viewBox="-10 -10 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<path id="crescentMoon" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,12.5 0 0,0 0,10 z" />
+		<path id="quarterMoon" d="M 0 10 A 10,10 0 0,1 0,-10 z" />
+		<path id="gibbousMoon" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,11.5 0 0,1 0,10 z" />
+		<circle id="fullMoon" r="10" />
+		<use id="waxingCrescentMoon" xlink:href="#crescentMoon" transform="scale(-1)" />
+		<use id="firstQuarterMoon" xlink:href="#quarterMoon" transform="scale(-1)"  />
+		<use id="waxingGibbousMoon" xlink:href="#gibbousMoon" transform="scale(-1)"  />
+		<use id="waningCrescentMoon" xlink:href="#crescentMoon" />
+		<use id="thirdQuarterMoon" xlink:href="#quarterMoon" />
+		<use id="waningGibbousMoon" xlink:href="#gibbousMoon" />
+	</defs>
 </svg>

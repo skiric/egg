@@ -169,25 +169,12 @@ moon {
 	.filter(blur(5px));
 }
 
-.phases(@n) when (@n > 0) {
-	.phases((@n - 1));
-	.phase@{n} {
-		visibility: hidden;
-	}
-}
-
-sky  {
-  .phases(5);
-}
-
-sun svg {
-	.rays {
-		fill: orange;
-		stroke: orange;
-		stroke-dasharray: .5;
-		stroke-dashoffset: 0%;
-		stroke-width: 10;
-	}
+sun {
+	fill: orange;
+	stroke: orange;
+	stroke-dasharray: .5;
+	stroke-dashoffset: 0%;
+	stroke-width: 10;
 }
 
 svg {
