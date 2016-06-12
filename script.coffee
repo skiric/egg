@@ -1,17 +1,56 @@
 DURATION = 240
 
+PHASES = ['full', 'waningGibbous', 'thirdQuarter', 'waningCrescent', 'new', 'waxingCrescent', 'firstQuarter', 'waxingGibbous']
+SEASONS = ['spring', 'summer', 'autumn', 'winter']
+TIMES = ['day', 'twilight', 'night', 'twilight']
+POSITIONS = ['0%', '50%', '100%', '50%']
+EASINGS = ['easeInSine', 'easeOutSine']
+REWARDS =
+	spring:
+		day: 'chick'
+		#twilight: 'bunny'
+		#night: 'cricket'
+	summer: {}
+		#day: 'beachball'
+		#twilight: 'sunglasses'
+		#night: 'firefly'
+	autumn: {}
+		#day: 'pumpkin'
+		#twilight: 'scarecrow'
+		#night: 'ghost'
+	winter: {}
+		#day: 'snowman'
+		#twilight: 'sled'
+		#night: 'ice'
+
 eggCrackSound = new Audio("audio/crack.wav")
+
+season = 0
+phase = 0
+time = 0
+
+# Gets the current phase, or a future phase
+getPhase = (offset = 0) -> PHASES[(phase + offset) % 8]
+# Gets the current season, or a future season
+getSeason = (offset = 0) -> SEASONS[(season + offset) % 4]
+# Gets the current time, or a future time
+getTime = (offset = 0) -> TIMES[(time + offset) % 4]
+# Gets a position based on a time (now or in the future)
+getPosition = (offset = 0) -> POSITIONS[(time + offset) % 4]
+# Gets the proper reward for the season and time. Or a chick. (It's always a chick.)
+getReward = () -> REWARDS[getSeason()][getTime()] || 'chick'
+
+# Adds a crack to the egg.
 crackEgg = (e) ->
 	egg = $ this
 	if egg.find('crack').length < 6
 		$ this
 			.append '<crack />'
-			.effect("shake", {
+			.effect "shake",
 				duration: DURATION
 				distance: 10
 				times: 2
-				})
-		eggCrackSound.currentTime = 0
+		#eggCrackSound.currentTime = 0
 		eggCrackSound.play()
 	else
 		egg.hide()
@@ -23,113 +62,80 @@ crackEgg = (e) ->
 		new Audio("audio/#{reward}.wav").play()
 		ga('send', 'event', 'Reward', "#{reward}")
 
-$('egg').click _.throttle crackEgg, DURATION, {trailing: false}
-
-PHASES = ['full', 'waningGibbous', 'thirdQuarter', 'waningCrescent', 'new', 'waxingCrescent', 'firstQuarter', 'waxingGibbous']
-TIMES = ['day', 'twilight', 'night', 'twilight']
-POSITIONS = ['0%', '50%', '100%', '50%']
-EASINGS = ['easeInSine', 'easeOutSine']
-time = 0
-phase = 0
+# Advances the day cycle.
 changeTime = (e) ->
-
-	$('sky, ground, egg, .egg').switchClass TIMES[time % 4], TIMES[(time + 1) % 4], DURATION
+	$('sky, ground, egg').switchClass getTime(), getTime(1), DURATION
 	time++
 	
-	options = {
-		specialEasing: {
+	options = 
+		specialEasing:
 			top: EASINGS[(time + 1) % 2]
 			left: EASINGS[time % 2]
-		}
 		duration: DURATION
-	}
 	
-	$('sun').animate({
-			top: POSITIONS[time % 4]
-			left: POSITIONS[(time + 1) % 4]
-		}, options)
-	options.complete = checkPhase
-	$('moon').animate({
-			top: POSITIONS[(time + 2) % 4]
-			left: POSITIONS[(time + 3) % 4]
-		}, options)
+	$('sun').animate
+			top: getPosition()
+			left: getPosition(1)
+		, options
 
-checkPhase = () ->
-	if(time % 4 == 0)
+	options.complete = changePhase
+
+	$('moon').animate
+			top: getPosition(2)
+			left: getPosition(3)
+		, options
+
+# Advances the moon cycle.
+changePhase = () ->
+	if time % 4 == 0
 		phase++
-		phaseName = PHASES[phase % 8]
+		phaseName = getPhase()
 		$('#moon').attr 'href', "svg/moon.svg##{phaseName}Moon"
 
-$('sky').click _.throttle changeTime, DURATION, {trailing: false}
-
-SEASONS = ['spring', 'summer', 'autumn', 'winter']
-season = 0
+# Advances the season cycle.
 changeSeason = (e) ->
-	ground = $ this
-	if (e.target == this)
-		groundTransition = $ '<ground />';
-		groundTransition
+	if e.target == this
+		$ground = $ this
+			.switchClass getSeason(), getSeason(1), DURATION
+
+		$groundTransition = $ '<ground />'
 			.hide()
-			.addClass SEASONS[(season + 1) % 4]
-			.addClass TIMES[time % 4]
-		ground.prepend(groundTransition)
-		ground.switchClass SEASONS[season % 4], SEASONS[(season + 1) % 4], DURATION
-		groundTransition.toggle 'slide', 2 * DURATION, () ->
-			groundTransition.remove()
-			season++
+			.addClass getSeason(1)
+			.addClass getTime()
+			.prependTo $ground
+			.toggle
+				'slide',
+				2 * DURATION,
+				() ->
+					$groundTransition.remove()
+					season++
 
-$('ground').click _.throttle changeSeason, 2 * DURATION, {trailing: false}
-
-REWARDS = {
-	spring: {
-		day: 'chick'
-		twilight: 'bunny'
-		night: 'cricket'
-	}
-	summer: {
-		day: 'beachball'
-		twilight: 'sunglasses'
-		night: 'firefly'
-	}
-	autumn: {
-		day: 'pumpkin'
-		twilight: 'scarecrow'
-		night: 'ghost'
-	}
-	winter: {
-		day: 'snowman'
-		twilight: 'sled'
-		night: 'ice'
-	}
-}
-
-getReward = () -> 'chick'
-
-showCloud = () ->
+# Adds a cloud to the sky.
+addCloud = () ->
 	size = _.random 5, 10
-	height = _.random(-size + 1, 25 - size)
+	height = _.random -size + 1, 25 - size
 	#size *=  if height <= 0 then 1 else (50-height) / 50 
-	$cloud = $('<cloud />')
-	$cloud.appendTo('sky')
-		.css {
+	$cloud = $ '<cloud />'
+		.appendTo 'sky'
+		.css
 			width: size + "vw"
 			height: size + "vw"
 			left: -size + "vw"
 			top: height + "vh"
-		}
-		.animate {
-			left: (size + 100) + "vw"
-		}, {
-			duration: 25000
+		.animate left: (size + 100) + "vw"
+		,	duration: 60000
 			easing: 'linear'
-			complete: () ->
-				$cloud.remove()
-		}
+			complete: () -> $cloud.remove()
 
-newCloud = () ->
+# Randomly adds clouds to the sky.
+spawnClouds = () ->
 	_.delay () ->
-		showCloud()
-		newCloud()
-	, _.random(750, 1000)
+		addCloud()
+		spawnClouds()
+	, _.random 750, 1000
 
-newCloud()
+$('egg').click _.throttle crackEgg, DURATION, trailing: false
+$('sky').click _.throttle changeTime, DURATION, trailing: false
+$('ground').click _.throttle changeSeason, 2 * DURATION, trailing: false
+
+spawnClouds()
