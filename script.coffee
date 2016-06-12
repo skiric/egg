@@ -104,3 +104,32 @@ REWARDS = {
 }
 
 getReward = () -> 'chick'
+
+showCloud = () ->
+	size = _.random 5, 10
+	height = _.random(-size + 1, 25 - size)
+	#size *=  if height <= 0 then 1 else (50-height) / 50 
+	$cloud = $('<cloud />')
+	$cloud.appendTo('sky')
+		.css {
+			width: size + "vw"
+			height: size + "vw"
+			left: -size + "vw"
+			top: height + "vh"
+		}
+		.animate {
+			left: (size + 100) + "vw"
+		}, {
+			duration: 25000
+			easing: 'linear'
+			complete: () ->
+				$cloud.remove()
+		}
+
+newCloud = () ->
+	_.delay () ->
+		showCloud()
+		newCloud()
+	, _.random(750, 1000)
+
+newCloud()
