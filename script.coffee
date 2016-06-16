@@ -87,14 +87,14 @@ changeTime = (e) ->
 
 # Advances the moon cycle.
 changePhase = () ->
-	if time % 4 == 0
+	if time % 4 is 0
 		phase++
 		phaseName = getPhase()
 		$('#moon').attr 'href', "svg/moon.svg##{phaseName}Moon"
 
 # Advances the season cycle.
 changeSeason = (e) ->
-	if e.target == this
+	if e.target is this
 		$ground = $ this
 			.switchClass getSeason(), getSeason(1), DURATION
 
@@ -103,8 +103,7 @@ changeSeason = (e) ->
 			.addClass getSeason(1)
 			.addClass getTime()
 			.prependTo $ground
-			.toggle
-				'slide',
+			.toggle 'slide',
 				2 * DURATION,
 				() ->
 					$groundTransition.remove()
@@ -114,7 +113,7 @@ changeSeason = (e) ->
 addCloud = () ->
 	size = _.random 5, 10
 	height = _.random -size + 1, 25 - size
-	#size *=  if height <= 0 then 1 else (50-height) / 50 
+	#size *=  if height <= 0 then 1 else (50-height) / 50
 	$cloud = $ '<cloud />'
 		.appendTo 'sky'
 		.css
@@ -123,7 +122,8 @@ addCloud = () ->
 			left: -size + "vw"
 			top: height + "vh"
 		.animate left: (size + 100) + "vw"
-		,	duration: 60000
+		,
+			duration: 60000
 			easing: 'linear'
 			complete: () -> $cloud.remove()
 
