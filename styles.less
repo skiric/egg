@@ -6,6 +6,9 @@
 body {
 	overflow: hidden;
 	.user-select(none);
+	* {
+		display: block;
+	}
 }
 
 .center() {
@@ -31,10 +34,6 @@ body {
 	-webkit-user-select: @value;
 }
 
-sky, ground {
-	display: block;
-}
-
 @sky-height: 50vh;
 @sky-color: #1D70B2;
 @night-color: black;
@@ -50,9 +49,43 @@ sky {
 	&.night {
 		background: @night-color;
 	}
+
 	&.twilight {
 		background: @twilight-color;
 	}
+}
+
+sun, moon {
+	.center;
+	display: block;
+	width: 30vh;
+	height: 30vh;
+	top: 0%;
+}
+
+moon {
+	width: 15vh;
+	height: 15vh;
+	top: 100%;
+	fill: lightgrey;
+}
+
+sun {
+	fill: orange;
+	stroke: orange;
+	stroke-dasharray: .5;
+	stroke-dashoffset: 0%;
+	stroke-width: 10;
+}
+
+cloud {
+	@color: white;
+	display: block;
+	background: @color;
+	position: fixed;
+	border-radius: 50%;
+	.filter(blur(10px));
+	opacity: .3;
 }
 
 .season(@color) {
@@ -65,15 +98,15 @@ sky {
 		background: darken(@color, 10%);
 	}
 }
-@ground-color: #92CC13;
 ground {
+	@color: #92CC13;
 	position: fixed;
 	top: 50%;
 	width: 100%;
 	height: 100vh - @sky-height;
-	background: @ground-color;
+	background: @color;
 
-	.season(@ground-color);
+	.season(@color);
 
 	&.summer {
 		.season(yellow);
@@ -143,49 +176,7 @@ egg crack {
 	}
 }
 
-.sky-object() {
-
-}
-
-sun, moon {
-	.center;
-	display: block;
-	.sky-object;
-	width: 30vh;
-	height: 30vh;
-	top: 0%;
-}
-
-moon {
-	.sky-object;
-	width: 15vh;
-	height: 15vh;
-	top: 100%;
-
-	fill: lightgrey;
-}
-
-.blur {
-	.filter(blur(5px));
-}
-
-sun {
-	fill: orange;
-	stroke: orange;
-	stroke-dasharray: .5;
-	stroke-dashoffset: 0%;
-	stroke-width: 10;
-}
-
 svg {
 	width: 100%;
 	height: 100%;
-}
-
-cloud {
-	@color: white;
-	display: block;
-	background: @color;
-	position: fixed;
-	border-radius: 50%;
 }

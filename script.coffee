@@ -60,13 +60,14 @@ crackEgg = (e) ->
 			.addClass TIMES[time % 4]
 			.addClass SEASONS[season % 4]
 		new Audio("audio/#{reward}.wav").play()
-		ga('send', 'event', 'Reward', "#{reward}")
+		ga 'send', 'event', 'Reward', "#{reward}"
 
 # Advances the day cycle.
 changeTime = (e) ->
 	$('sky, ground, egg').switchClass getTime(), getTime(1), DURATION
+	#$('cloud').switchClass(getTime(), getTime(1), DURATION).dequeue()
 	time++
-	
+
 	options = 
 		specialEasing:
 			top: EASINGS[(time + 1) % 2]
@@ -104,15 +105,15 @@ changeSeason = (e) ->
 			.addClass getTime()
 			.prependTo $ground
 			.toggle 'slide',
-				2 * DURATION,
-				() ->
+				duration: 2 * DURATION,
+				complete: () ->
 					$groundTransition.remove()
 					season++
 
 # Adds a cloud to the sky.
 addCloud = () ->
 	size = _.random 5, 10
-	height = _.random -size + 1, 25 - size
+	height = _.random -size + 1, 20 - size
 	#size *=  if height <= 0 then 1 else (50-height) / 50
 	$cloud = $ '<cloud />'
 		.appendTo 'sky'
@@ -123,16 +124,15 @@ addCloud = () ->
 			top: height + "vh"
 		.animate left: (size + 100) + "vw"
 		,
-			duration: 60000
+			duration: 30000
 			easing: 'linear'
 			complete: () -> $cloud.remove()
 
 # Randomly adds clouds to the sky.
 spawnClouds = () ->
-	_.delay () ->
-		addCloud()
-		spawnClouds()
-	, _.random 750, 1000
+	for i in [0..3]
+		_.delay addCloud, _.random(i * 500, (i+1) * 500)
+	_.delay spawnClouds, _.random 2000, 4000
 
 $('egg').click _.throttle crackEgg, DURATION, trailing: false
 $('sky').click _.throttle changeTime, DURATION, trailing: false
