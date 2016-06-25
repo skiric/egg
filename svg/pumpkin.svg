@@ -1,0 +1,12 @@
+<svg viewBox="-10 -10 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<def>
+		<circle id="pumpkin" r="6.5" cx="3" />
+	</def>
+	<g transform="translate(0,.5)">
+		<path d="M 0 -6 a 2,2,0,0,1,2,-2" fill="none" stroke="brown"/>
+		<use xlink:href="#pumpkin" fill="orange" />
+		<use xlink:href="#pumpkin" transform="scale(-1)" fill="orange" />
+		<use xlink:href="#pumpkin" fill="none" stroke="brown" />
+		<use xlink:href="#pumpkin" transform="scale(-1)" fill="none" stroke="brown" />
+	</g>
+</svg>

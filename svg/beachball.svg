@@ -1,0 +1,6 @@
+<svg viewBox="-10 -10 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<circle r="10" fill="white" />
+	<path id="part" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,11.5 0 0,0 0,10 z" />
+	<use xlink:href="#part" fill="red" />
+	<use xlink:href="#part" transform="scale(-1)" fill="blue" />
+</svg>

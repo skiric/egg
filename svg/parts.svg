@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<svg viewBox="-10 -10 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<path id="crescent" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,11.5 0 0,0 0,10 z" />
+		<path id="quarterMoon" d="M 0 10 A 10,10 0 0,1 0,-10 z" />
+		<path id="gibbousMoon" d="M 0 10 A 10,10 0 0,1 0,-10 A 10,11.5 0 0,1 0,10 z" />
+		<circle id="fullMoon" r="10" />
+		<use id="waxingCrescentMoon" xlink:href="#crescent" transform="scale(-1)" />
+		<use id="firstQuarterMoon" xlink:href="#quarterMoon" transform="scale(-1)"  />
+		<use id="waxingGibbousMoon" xlink:href="#gibbousMoon" transform="scale(-1)"  />
+		<use id="waningCrescentMoon" xlink:href="#crescent" />
+		<use id="thirdQuarterMoon" xlink:href="#quarterMoon" />
+		<use id="waningGibbousMoon" xlink:href="#gibbousMoon" />
+
+		<g id="beachball">
+			<circle r="10" fill="white" />
+			<use xlink:href="#crescent" fill="red" />
+			<use xlink:href="#crescent" fill="blue" transform="scale(-1)" />
+		</g>
+		<g id="pumpkin" transform="translate(0,.5)">
+			<circle r="9" cx="3" fill="orange" />
+			<circle r="9" cx="-3" fill="orange" />
+			<circle r="9" cx="3" fill="none" stroke="brown" />
+			<circle r="9" cx="-3" fill="none" stroke="brown" />
+			<path d="M 0 -9 a 2,1,0,0,1,2,-1" fill="none" stroke="brown"/>
+		</g>
+	</defs>
+	<g id="snowman" transform="translate(0,.5)">
+		<line x1="-10" x2="10" stroke="black" />
+		<circle r="6" cy="3" fill="white" stroke="gray"/>
+		<circle r="4" cy="-6" fill="white" stroke="gray"/>
+		<circle r=".5" cx="-2" cy="-7" />
+		<circle r=".5" cx="2" cy="-7" />
+		<circle r=".5" cy="-5" fill="orange"/>
+		<circle r=".5" cy="0" />
+		<circle r=".5" cy="3" />
+	</g>
+</svg>

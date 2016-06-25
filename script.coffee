@@ -10,16 +10,16 @@ REWARDS =
 		day: 'chick'
 		#twilight: 'bunny'
 		#night: 'cricket'
-	summer: {}
-		#day: 'beachball'
+	summer:
+		day: 'beachball'
 		#twilight: 'sunglasses'
 		#night: 'firefly'
-	autumn: {}
-		#day: 'pumpkin'
+	autumn:
+		day: 'pumpkin'
 		#twilight: 'scarecrow'
 		#night: 'ghost'
-	winter: {}
-		#day: 'snowman'
+	winter:
+		day: 'snowman'
 		#twilight: 'sled'
 		#night: 'ice'
 
@@ -29,16 +29,16 @@ season = 0
 phase = 0
 time = 0
 
-# Gets the current phase, or a future phase
+# Gets the current phase, or a future phase.
 getPhase = (offset = 0) -> PHASES[(phase + offset) % 8]
-# Gets the current season, or a future season
+# Gets the current season, or a future season.
 getSeason = (offset = 0) -> SEASONS[(season + offset) % 4]
-# Gets the current time, or a future time
+# Gets the current time, or a future time.
 getTime = (offset = 0) -> TIMES[(time + offset) % 4]
-# Gets a position based on a time (now or in the future)
+# Gets a position based on a time (now or in the future).
 getPosition = (offset = 0) -> POSITIONS[(time + offset) % 4]
-# Gets the proper reward for the season and time. Or a chick. (It's always a chick.)
-getReward = () -> REWARDS[getSeason()][getTime()] || 'chick'
+# Gets the proper reward for the season and time.
+getReward = () -> REWARDS[getSeason()][getTime()] || REWARDS[getSeason()].day
 
 # Adds a crack to the egg.
 crackEgg = (e) ->
