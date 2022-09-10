@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "jeremyrabainodotcom"
+  },
+  "targets": {
+    "jeremyrabainodotcom": {
+      "hosting": {
+        "egg": [
+          "egg-jeremyrabainodotcom"
+        ]
+      }
+    }
+  }
+}

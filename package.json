@@ -1,24 +1,34 @@
 {
-  "name": "jrabaino-website",
+  "name": "egg",
   "version": "1.0.0",
-  "description": "My website",
-  "main": "index.html",
+  "description": "It's an egg.",
+  "source": "src/index.html",
   "scripts": {
-    "test": "lessc -l styles.less && coffee -c script.coffee && jasmine"
+    "start": "npx rimraf dist && parcel",
+    "build": "npx rimraf dist && parcel build",
+    "lint": "eslint \"src/**/*.jsx\"",
+    "deploy": "yarn build && firebase deploy",
+    "preview": "yarn build && firebase hosting:channel:deploy egg"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skiric/website.git"
+    "url": "git+https://github.com/skiric/egg.git"
   },
   "author": "Jeremy Rabaino",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/skiric/website/issues"
+    "url": "https://github.com/skiric/egg/issues"
   },
-  "homepage": "https://github.com/skiric/website#readme",
+  "homepage": "https://github.com/skiric/egg#readme",
   "devDependencies": {
-    "coffee-script": "^1.10.0",
-    "jasmine": "^2.4.1",
-    "less": "^2.7.1"
+    "@parcel/transformer-less": "2.7.0",
+    "less": "^2.7.1",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "lodash": "^4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

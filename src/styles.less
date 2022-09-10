@@ -38,7 +38,8 @@ body {
 @sky-color: #1D70B2;
 @night-color: black;
 @twilight-color: orangered;
-sky {
+@transition-time: 750ms;
+#sky {
 	top: 0%;
 	width: 100%;
 	position: fixed;
@@ -50,35 +51,34 @@ sky {
 		background: @night-color;
 	}
 
-	&.twilight {
+	&.dawn, &.dusk {
 		background: @twilight-color;
 	}
 }
 
-sun, moon {
-	.center;
-	display: block;
-	width: 30vh;
-	height: 30vh;
-	top: 0%;
-}
-
-moon {
+#moon {
 	width: 15vh;
 	height: 15vh;
 	top: 100%;
 	fill: lightgrey;
+	position: fixed;
+	transform: translate(-50%, -50%);
 }
 
-sun {
+#sun {
 	fill: orange;
 	stroke: orange;
 	stroke-dasharray: .5;
 	stroke-dashoffset: 0%;
 	stroke-width: 10;
+	
+	width: 30vmin;
+	height: 30vmin;
+	position: fixed;
+	transform: translate(-50%, -50%);
 }
 
-cloud {
+.cloud {
 	@color: white;
 	display: block;
 	background: @color;
@@ -94,11 +94,11 @@ cloud {
 	&.night {
 		background: darken(@color, 25%);
 	}
-	&.twilight {
+	&.dawn, &.dusk {
 		background: darken(@color, 10%);
 	}
 }
-ground {
+#ground {
 	@color: #92CC13;
 	position: fixed;
 	top: 50%;
@@ -124,9 +124,9 @@ ground {
 @egg-color: #FFFFEE;
 @egg-border: lighten(black, 50%);
 @egg-height: 300px;
-@egg-width: @egg-height * 2/3;
+@egg-width: 200px;
 
-egg {
+#egg {
    .center;
    display: block;
    width: @egg-width;
@@ -136,32 +136,39 @@ egg {
    border: medium solid @egg-border;
    overflow: hidden;
 
-   	&.night {
+	&.night {
 		background: mix(@egg-color, @night-color, 75%);
 	}
-	&.twilight {
+	&.dawn, &.dusk {
 		background: mix(@egg-color, @twilight-color, 75%);
+	}
+
+	&.open {
+		opacity: 0;
 	}
 }
 
-egg crack {
+#egg .crack {
 	display: inline-block;
 	border-left: 2px solid @egg-border;
 	@crack-size: @egg-width / 6;
-	height: sqrt(2  * @crack-size * @crack-size);
+	height: calc(@crack-size * sqrt(2));
 	width: 0;
 	margin-top: @egg-height * .6;
 	transform-origin: 0 0;
-	margin-right: @crack-size - 2;
+	margin-right: calc(@crack-size - 2px);
 
 	&:nth-child(even) {
-		transform: translate(@crack-size) rotate(45deg);
+		transform: translate(calc(@crack-size)) rotate(45deg);
 	}
 	&:nth-child(odd) {
 		transform: rotate(-45deg);
 	}
 }
 
+#reward {
+	.center;
+}
 .nugget {
 	.center;
 	display: block;
@@ -179,4 +186,30 @@ egg crack {
 svg {
 	width: 100%;
 	height: 100%;
+}
+
+#ground, #sky, #egg {
+	transition: background-color 500ms;
+}
+
+.day > #sun, .night > #moon {
+	top: 5%;
+	left: 50%;
+	transition: top @transition-time, left ease-in-out @transition-time;
+}
+.dusk > #sun, .dawn > #moon {
+	top: 50%;
+	left: 95%;
+	transition: top ease-in-out @transition-time, left @transition-time;
+}
+.dawn > #sun, .dusk > #moon {
+	top: 50%;
+	left: 5%;
+	transition: top ease-in-out @transition-time, left @transition-time;
+}
+.night > #sun, .day > #moon {
+	top: 95%;
+	left: 50%;
+	right: 50%;
+	transition: top @transition-time, left ease-in-out @transition-time;
 }
